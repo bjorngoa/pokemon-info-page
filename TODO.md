@@ -1,0 +1,3 @@
+- as a user, I shall be able to look up the the diffrent pokemons and get some info on them
+- favorite a pokemon? 
+- make comments on pokemon
