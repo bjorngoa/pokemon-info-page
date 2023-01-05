@@ -1,6 +1,8 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Comments from "../components/Comments";
+import { Comments } from "../components/Comments";
+
+
 
 const Home: NextPage = () => {
  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -17,6 +19,7 @@ const Home: NextPage = () => {
        
        
         <Comments />
+        
       </main>
     </>
   );
