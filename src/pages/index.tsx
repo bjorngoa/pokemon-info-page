@@ -1,13 +1,44 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import UseFetchedData from "../api/api";
+
 import { Comments } from "../components/Comments";
 
 
 
 const Home: NextPage = () => {
  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
+ const {data, isLoading} = UseFetchedData()
+ const [pokeImg, setPokeImg] = useState(null)
+ const [loadingImg, setLoadingImg] = useState(false)
+ const pokemonLink = data?.results?.map(link => link.url) 
 
+ useEffect(() => {
+      setLoadingImg(true)
+      fetch(pokemonLink)
+        .then((res) => res.json())
+        .then((data) => {
+          setPokeImg(data)
+          setLoadingImg(false)
+        })
+    }, []) 
+    
+  const Pokemons = () => {
+    
+    
+    if (isLoading) return <p>Loading...</p>
+    if (!data) return <p>no data</p>
+   
   
+   
+    return (
+      <>
+        <div className="text-white">number of pokemons: {data?.results.length}</div>
+        <div className="grid grid-cols-3 gap-4 text-white">{data.results.map(pokemon => <a href={pokemon.url} key={pokemon.name}>{pokemon.name}</a>)}</div>
+      </>
+    )
+  }
   return (
     <>
       <Head>
@@ -18,8 +49,8 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
        
        
+        <Pokemons />
         <Comments />
-        
       </main>
     </>
   );
