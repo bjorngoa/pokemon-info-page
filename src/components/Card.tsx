@@ -7,7 +7,7 @@ export const Card = () => {
   const { data, pokemonName } = UseFetchedData()
   console.log("tihi", pokemonName)
   
-  
+  //TODO: MAKE every image a link that leads to the specific pokemon!
   return (
     <div className='grid grid-cols-3'>
 
