@@ -38,7 +38,7 @@ const Home: NextPage = () => {
    
     return (
       <>
-        <div className="text-white">number of pokemons: {data?.results.length}</div>
+        <div className="text-white">number of pokemons listed: {data?.results.length}</div>
         {/* <div className="grid grid-cols-3 gap-4 text-white">{data.results.map(pokemon => <a href={pokemon.url} key={pokemon.name}>{pokemon.name}</a>)}</div>  */}
         <div className="text-white">{data.results.map(pokemon => {
           return (
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
        
         {/* <img src={pokeImg.sprites.front_default} /> */}
         <Pokemons />
-        <Comments />
+        {/* <Comments /> */}
         <Card />
       </main>
     </>
