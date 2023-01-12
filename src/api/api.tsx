@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 const UseFetchedData = () => {
     const [data, setData] = useState(null)
     const [isLoading, setLoading] = useState(false)
-    const [pokemonName, setPokemonName] = useState("")
+    const [pokemonName, setPokemonName] = useState<string[]>([])
     const [pokemonImg, setPokemonImg] = useState()
     useEffect(() => {
         setLoading(true)

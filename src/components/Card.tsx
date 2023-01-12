@@ -1,24 +1,27 @@
 import { setDefaultResultOrder } from 'dns'
+import Image from 'next/image'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { resourceLimits } from 'worker_threads'
 import UseFetchedData from '../api/api'
 
 export const Card = () => {
   const { data, pokemonName } = UseFetchedData()
-  console.log("tihi", pokemonName)
   
-  //TODO: MAKE every image a link that leads to the specific pokemon!
+  
+  
   return (
-    <div className='grid grid-cols-3'>
+    <div className='grid grid-cols-4'>
 
-      {data?.results.map((pokemon, idx) => {
+      {data?.results.map((pokemon: any, idx: number) => {
         const newIdx = idx + 1
+        const src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newIdx}.png`
         return (
           <>
-          <div className='text-white text-center'>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newIdx}.png`} />
+          <Link href={`/pokemons/${pokemon.name}`} className='text-white text-center'>
+            <Image loader={() => src} src={src} width={200} height={100} alt={pokemon.name}/>
             {pokemon.name}
-          </div>
+          </Link>
           </>
         )
       })}
