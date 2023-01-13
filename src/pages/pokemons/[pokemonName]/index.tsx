@@ -10,7 +10,7 @@ const Index = () => {
     pokemonName: string;
   }
   const [pokemon, setPokemon] = useState([])
-  const [pokemonAbilities, setPokemonAbilities] = useState([])
+  const [pokemonAbilities, setPokemonAbilities] = useState<any[]>()
   const [loading, setLoading] = useState(false)
   const [pokemonImage, setPokemonImage] = useState<string>()
   const [pokemonImageBack, setPokemonImageBack] = useState<string>()
@@ -23,15 +23,21 @@ const Index = () => {
             .then((res) => res.json())
             .then((data) => {
                 setPokemon(data)
-                setPokemonAbilities(data?.abilities)
+                setPokemonAbilities(data?.abilities.map(abi => abi.ability.name)) 
                 setPokemonImage(data.sprites?.front_default)
                 setPokemonImageBack(data.sprites?.back_default)
+                
+            })
+             .catch((error) => {
+                console.log(error)
             })
             setLoading(false)
             
     }, [pokemonName])
-   
-    console.log(pokemonName)
+  /* const abilityNames = pokemonAbilities?.map(p => p.ability.name)*/
+  console.log(pokemonAbilities?.map(a => a)) 
+ /*  const abilityOne = abilityNames?.shift()
+  const abilityTwo = abilityNames?.pop() */
   const src = pokemonImage
   const srcBack = pokemonImageBack
   
@@ -47,7 +53,7 @@ const Index = () => {
         </nav>
       </div>
       <div className="flex  flex-col items-center justify-center ">
-          <h1 className='text-white text-5xl'>{pokemonName}</h1>
+          <h1 className='text-white text-5xl mt-20'>{pokemonName}</h1>
           {loading ? <p className='text-white'>loading...</p> : 
               <div>
                 <div className='flex justify-center items-center'>
@@ -57,6 +63,10 @@ const Index = () => {
                 </div>
                   <p className='text-white'>height: {pokemon.height}</p>
                   <p className='text-white'>Weight: {pokemon.weight}</p>
+                  <div className='text-white flex gap-1'>Abilities:{pokemonAbilities?.map((ability, idx) => <p key={idx}>{ability},</p>)}</div>
+                  
+                  {/* <p className='text-white'>abilities: {abilityOne}, {abilityTwo}</p>   */}          
+                  {/* <p className='text-white'>ability: {pokemonAbilities.map(ability => ability[0])}</p> */}
               </div>
           }
       </div>
