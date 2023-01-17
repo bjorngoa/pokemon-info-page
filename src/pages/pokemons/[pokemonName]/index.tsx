@@ -4,17 +4,23 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import UseFetchedData from '../../../api/api'
 
+
+
+
 const Index = () => {
   const { data } = UseFetchedData()
   const { pokemonName = ""} = useRouter().query as {
-    pokemonName: string;
+    pokemonName?: string;
   }
   const [pokemon, setPokemon] = useState([])
-  const [pokemonAbilities, setPokemonAbilities] = useState<any[]>()
+  const [pokemonAbilities, setPokemonAbilities] = useState<string[]>()
   const [loading, setLoading] = useState(false)
-  const [pokemonImage, setPokemonImage] = useState<string>()
-  const [pokemonImageBack, setPokemonImageBack] = useState<string>()
+  const [pokemonImage, setPokemonImage] = useState<string | undefined>()
+  const [pokemonImageBack, setPokemonImageBack] = useState<string | undefined>()
   const [pokemonStanceFront, setPokemonStanceFront] = useState(true)
+  const backArrow = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+</svg>
 
   
    useEffect(() => {
@@ -23,7 +29,7 @@ const Index = () => {
             .then((res) => res.json())
             .then((data) => {
                 setPokemon(data)
-                setPokemonAbilities(data?.abilities.map(abi => abi.ability.name)) 
+                setPokemonAbilities(data?.abilities?.map((abi:{ability: {name: string}}) => abi.ability.name) as string[]) 
                 setPokemonImage(data.sprites?.front_default)
                 setPokemonImageBack(data.sprites?.back_default)
                 
@@ -40,14 +46,14 @@ const Index = () => {
   const abilityTwo = abilityNames?.pop() */
   const src = pokemonImage
   const srcBack = pokemonImageBack
-  
+
   return (
     <div className="min-h-screen flex flex-col  bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <div className=' w-full md:block md:w-auto'>
         <nav className='bg-gray-900 flex flex-end border-gray-200 px-2 sm:px-4 py-2. text-white'>
           <ul className='flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
-            <li>
-              <Link className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent  md:p-0 dark:text-white' href={"/"}>Home</Link>
+            <li className=' flex items-center'>
+              <Link className=' py-2 pl-3 pr-4 text-white md:bg-transparent  md:p-0 dark:text-white ' href={"/"}>{backArrow} Back</Link>
             </li>
           </ul>
         </nav>
